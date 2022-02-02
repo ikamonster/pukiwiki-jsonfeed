@@ -15,7 +15,9 @@ XML形式の RSS や Atom に比べ、パースが簡単に済みます。
 
 ## インストール
 
-jsonfeed.inc.php を PukiWiki の plugin ディレクトリに配置してください。
+下記GitHubページからダウンロードした jsonfeed.inc.php を PukiWiki の plugin ディレクトリに配置してください。
+
+[https://github.com/ikamonster/pukiwiki-jsonfeed](https://github.com/ikamonster/pukiwiki-jsonfeed)
 
 ## 使い方
 
