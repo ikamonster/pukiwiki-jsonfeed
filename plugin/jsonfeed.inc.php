@@ -1,6 +1,6 @@
 <?php
 // PukiWiki - Yet another WikiWikiWeb clone
-// jsonfeed.inc.php v1.1
+// jsonfeed.inc.php v1.11
 // Copyright 2020 M.Taniguchi
 // License: GPL v3 or (at your option) any later version
 //
@@ -53,7 +53,7 @@ function plugin_jsonfeed_makejson($rss_max = 10, $version = '1.1', $action = fal
 		if ($rss_max > 0) {
 			foreach (file_head($recent, $rss_max) as $line) {
 				list($time, $page) = explode("\t", rtrim($line));
-				$r_page = pagename_urlencode($page);
+				$url = get_page_uri($page, PKWK_URI_ABSOLUTE);
 				$title  = mb_convert_encoding($page, 'UTF-8', SOURCE_ENCODING);
 
 				switch ($version) {
@@ -62,8 +62,8 @@ function plugin_jsonfeed_makejson($rss_max = 10, $version = '1.1', $action = fal
 					$date = date('Y-m-d\TH:i:sP', $time);
 					$summary = date('Y-m-d\TH:i:sP', $time);
 					$items[] = array(
-						'id' => $self . $r_page,
-						'url' => $self . $r_page,
+						'id' => $url,
+						'url' => $url,
 						'title' => $title,
 						'date_published' => $date
 					);
@@ -99,7 +99,7 @@ function plugin_jsonfeed_makejson($rss_max = 10, $version = '1.1', $action = fal
 			break;
 		}
 
-		$json = json_encode($feed, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+		$json = json_encode($feed, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
 
 		$fp = fopen($cacheFile, 'w');
 		flock($fp, LOCK_EX);
